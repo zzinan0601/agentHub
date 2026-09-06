@@ -9,7 +9,7 @@
 
 - Python 3.12
 - 내 노트북에서 도는 Ollama (`ollama list` 로 모델 확인)
-- 팀에서 받은 이 저장소 (`C:\aiProject\claude2`)
+- 이 저장소를 clone 한 폴더. 아래 명령은 전부 그 폴더 안에서 실행한다
 
 ---
 
