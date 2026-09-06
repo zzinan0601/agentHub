@@ -1,0 +1,18 @@
+# 줄바꿈을 통일한다. 이게 없으면 사람마다 CRLF/LF 가 달라져
+# 아무것도 안 고쳤는데 파일 전체가 바뀐 것으로 보이는 diff 가 생긴다.
+
+# 저장소에는 LF 로 담고, 윈도우에서 받을 때 CRLF 로 풀어준다.
+* text=auto
+
+# 배치 파일은 반드시 CRLF 여야 한다. LF 면 윈도우 cmd 가 제대로 못 읽는 경우가 있다.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# 이건 손대면 깨진다.
+*.png binary
+*.jpg binary
+*.docx binary
+*.xlsx binary
+*.pdf binary
+*.zip binary
+*.whl binary

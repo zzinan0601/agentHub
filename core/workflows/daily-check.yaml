@@ -1,0 +1,9 @@
+# 고정 파이프라인 예시. 방에서 이 워크플로우를 고르면 라우터 LLM 을 건너뛰고
+# 항상 이 순서대로 실행한다. 매일 같은 형식의 결과가 필요할 때 쓴다. (요구사항 11)
+
+name: 일일 점검
+description: 매일 아침 상태를 확인하고 요약 보고서를 만든다.
+mode: sequential # parallel 또는 sequential
+steps:
+  - agent: echo
+  - agent: summary

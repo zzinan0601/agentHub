@@ -1,0 +1,271 @@
+/* 디자인 토큰. 색·간격·타이포는 전부 여기서만 정의한다.
+ *
+ * 방향: 잉크 네이비 레일 + 차분한 캔버스. 강조색은 딥 틸 하나뿐이고,
+ * "완료"는 색을 빼서 가라앉힌다. 그래야 지금 일하고 있는 것만 눈에 들어온다.
+ *
+ * 폰트: 폐쇄망이라 웹폰트를 내려받을 수 없다. 시스템 폰트만 쓰되
+ * 'Segoe UI' 를 앞에 두어 영문·숫자를 잡고, 한글은 뒤의 Malgun Gothic 이 받는다.
+ */
+:root {
+  /* 잉크 */
+  --ink-900: #12172a;
+  --ink-700: #2b3350;
+  --ink-500: #5c6580; /* 보조 텍스트 */
+  /* 흐린 텍스트. 흰 배경뿐 아니라 캔버스(#eceff5)와 경고 패널(#fbeae8) 위에서도
+     4.5:1 을 넘도록 잡았다. 가장 밝은 배경만 보고 정하면 다른 면에서 미달한다. */
+  --ink-400: #606a80;
+  --ink-300: #949cb0; /* 선·아이콘 등 장식 전용. 글자에는 쓰지 않는다 */
+
+  /* 면과 선 */
+  --canvas: #eceff5;
+  --surface: #ffffff;
+  --surface-sunk: #f5f7fa;
+  --line: #dee2ec;
+  --line-strong: #c8cedd;
+
+  /* 레일 (어두운 좌측) */
+  --rail: #12172a;
+  --rail-hi: #1d2440;
+  --rail-text: #b9c0d4;
+  --rail-muted: #7d86a4; /* 레일 위 보조 텍스트 - 4.9:1 */
+
+  /* 강조 - 진행 중, 선택, 브랜드 */
+  --accent: #0d7a82;
+  --accent-hi: #0a626a;
+  --accent-soft: #dff0f1;
+  --accent-on-rail: #4fd1c5;
+
+  /* 실패 */
+  --danger: #b23b32;
+  --danger-soft: #fbeae8;
+
+  /* 남이 쓰는 중 - 틸(정상)도 빨강(실패)도 아닌 세 번째 상태.
+     폐쇄망의 로컬 모델은 응답이 길어서 "지금 누가 잡고 있다"를 나타낼 자리가 필요하다.
+     글자용 --busy 는 흰 배경 5.76:1 / 캔버스 5.00:1 로 AA 를 넘고,
+     --busy-dot 은 8px 짜리 점에만 쓰는 장식이라 밝게 잡는다. */
+  --busy: #9a5407;
+  --busy-dot: #e0871f;
+  --busy-soft: #fdf0e0;
+
+  /* 타이포 */
+  --sans: 'Segoe UI', 'Malgun Gothic', system-ui, -apple-system, sans-serif;
+  --mono: 'Cascadia Mono', Consolas, 'D2Coding', 'Malgun Gothic', monospace;
+
+  /* 깊이 */
+  --shadow-sm: 0 1px 2px rgba(18, 23, 42, 0.06);
+  --shadow-md: 0 2px 8px rgba(18, 23, 42, 0.07), 0 1px 2px rgba(18, 23, 42, 0.04);
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink-900);
+  background: var(--canvas);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 데이터성 텍스트 - 에이전트 id, 소요시간, cron.
+   본문과 다른 계열로 두어 "시스템이 말하는 값"임을 드러낸다. */
+.data {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 구획 라벨 */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 스크롤바를 화면 톤에 맞춘다 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 6px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-300);
+  background-clip: content-box;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* --- Markdown 본문 (요구사항 19) --------------------------------------- */
+.md > *:first-child {
+  margin-top: 0;
+}
+.md > *:last-child {
+  margin-bottom: 0;
+}
+.md h2 {
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+.md h3 {
+  font-size: 13.5px;
+  font-weight: 650;
+  margin: 18px 0 6px;
+  color: var(--ink-700);
+}
+.md p {
+  margin: 9px 0;
+}
+.md ul,
+.md ol {
+  margin: 9px 0;
+  padding-left: 20px;
+}
+.md li {
+  margin: 3px 0;
+}
+.md li::marker {
+  color: var(--ink-300);
+}
+.md table {
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
+  display: block;
+  overflow-x: auto; /* 넓은 표는 표 안에서만 가로 스크롤 */
+  max-width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.md th,
+.md td {
+  padding: 7px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+.md tr:last-child td {
+  border-bottom: none;
+}
+.md th {
+  background: var(--surface-sunk);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  white-space: nowrap;
+}
+/* 숫자 열은 자리를 맞춰 세로로 읽히게 한다 */
+.md td[align='right'],
+.md th[align='right'] {
+  font-variant-numeric: tabular-nums;
+}
+.md pre {
+  background: var(--ink-900);
+  color: #e6e9f2;
+  border-radius: 8px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-size: 12.5px;
+  line-height: 1.6;
+  margin: 12px 0;
+}
+.md code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+}
+.md :not(pre) > code {
+  background: var(--accent-soft);
+  color: var(--accent-hi);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.md blockquote {
+  margin: 12px 0;
+  padding: 8px 14px;
+  border-left: 2px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: 0 6px 6px 0;
+  color: var(--ink-700);
+}
+.md blockquote p {
+  margin: 0;
+}
+.md img {
+  max-width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  margin: 10px 0;
+}
+.md a {
+  color: var(--accent-hi);
+  text-underline-offset: 2px;
+}
+.md hr {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 18px 0;
+}
+
+/* 어두운 코드블록 위에서 쓸 하이라이트 색 */
+.md pre .hljs-keyword,
+.md pre .hljs-selector-tag,
+.md pre .hljs-built_in {
+  color: #7fd6c8;
+}
+.md pre .hljs-string,
+.md pre .hljs-attr {
+  color: #f0c987;
+}
+.md pre .hljs-number,
+.md pre .hljs-literal {
+  color: #c3a6ff;
+}
+.md pre .hljs-comment {
+  color: #6b7490;
+  font-style: italic;
+}
+.md pre .hljs-title,
+.md pre .hljs-function {
+  color: #9fc7ff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

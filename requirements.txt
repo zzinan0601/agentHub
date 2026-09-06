@@ -1,0 +1,17 @@
+# 코어(코디네이터) 의존성. 버전은 반드시 고정한다. (요구사항 8)
+# 설치: pip install -r requirements.txt
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+pydantic==2.13.4
+pydantic-settings==2.15.0
+python-dotenv==1.2.3
+PyYAML==6.0.3
+httpx==0.28.1
+langchain-core==1.6.0
+langchain-ollama==1.1.0
+langgraph==1.2.11
+SQLAlchemy==2.0.52
+asyncpg==0.31.0
+greenlet==3.5.5
+APScheduler==3.11.3
+tzlocal==5.4.4
